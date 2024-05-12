@@ -43,4 +43,25 @@ impl Vector {
         }
         return total_profit;
     }
+
+    pub fn rotate(nums: &mut Vec<i32>, k: i32) {
+        let target = k as usize % nums.len();
+        nums[..].reverse();
+        nums[..target].reverse();
+        nums[target..].reverse();
+    }
+
+    pub fn rotate2(nums: &mut Vec<i32>, k: i32) {
+        nums.rotate_right(k as usize);
+    }
+
+    pub fn rotate3(nums: &mut Vec<i32>, k: i32) {
+        let mut new_nums = vec![];
+        for i in 0..nums.len() {
+            let target = (i + (k as usize) + 1) % nums.len();
+            new_nums.push(nums[target])
+        }
+        nums.clear();
+        nums.append(&mut new_nums);
+    }
 }
