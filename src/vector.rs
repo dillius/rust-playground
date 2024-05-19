@@ -1,5 +1,6 @@
-
 pub struct Vector;
+
+use std::collections::HashSet;
 
 impl Vector {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
@@ -37,7 +38,7 @@ impl Vector {
     pub fn max_profit2(prices: Vec<i32>) -> i32 {
         let mut total_profit = 0;
         for index in 1..prices.len() {
-            if(prices[index] > prices[index - 1]) {
+            if (prices[index] > prices[index - 1]) {
                 total_profit += prices[index] - prices[index - 1];
             }
         }
@@ -63,5 +64,27 @@ impl Vector {
         }
         nums.clear();
         nums.append(&mut new_nums);
+    }
+
+    pub fn contains_duplicate2(nums: Vec<i32>) -> bool {
+        let mut seen = vec![];
+        let mut result = false;
+        let mut index = 0;
+
+        while !result && index < nums.len() {
+            let check = nums[index];
+            if seen.contains(&check) {
+                result = true;
+            } else {
+                seen.push(check);
+            }
+            index += 1;
+        }
+
+        result
+    }
+    pub fn contains_duplicate(nums: Vec<i32>) -> bool {
+        let mut exists = HashSet::new();
+        !nums.into_iter().all(|n| exists.insert(n))
     }
 }
