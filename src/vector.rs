@@ -87,4 +87,22 @@ impl Vector {
         let mut exists = HashSet::new();
         !nums.into_iter().all(|n| exists.insert(n))
     }
+
+    pub fn single_number2(nums: Vec<i32>) -> i32 {
+        let mut seen: HashSet<i32> = HashSet::new();
+
+        for num in nums {
+            if(seen.contains(&num)) {
+                seen.remove(&num);
+            } else {
+                seen.insert(num);
+            }
+        }
+
+        *seen.iter().next().unwrap_or(&0)
+    }
+
+    pub fn single_number(nums: Vec<i32>) -> i32 {
+        nums.into_iter().fold(0, |cum, curr| cum ^ curr)
+    }
 }

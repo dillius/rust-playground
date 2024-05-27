@@ -19,4 +19,5 @@ fn main() {
     });
 
     println!("Result: {}", Vector::contains_duplicate(vec![1, 2, 3, 1]));
+    println!("Result: {}", Vector::single_number(vec![4,1,2,1,2]));
 }
