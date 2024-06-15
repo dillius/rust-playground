@@ -20,4 +20,7 @@ fn main() {
 
     println!("Result: {}", Vector::contains_duplicate(vec![1, 2, 3, 1]));
     println!("Result: {}", Vector::single_number(vec![4,1,2,1,2]));
+
+    println!("Result: {:?}", Vector::intersect2(vec![1,2,2,1], vec![2,2]));
+    println!("Result: {:?}", Vector::intersect(vec![1,2,2,1], vec![2,2]));
 }

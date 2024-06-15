@@ -1,6 +1,6 @@
 pub struct Vector;
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 impl Vector {
     pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
@@ -104,5 +104,74 @@ impl Vector {
 
     pub fn single_number(nums: Vec<i32>) -> i32 {
         nums.into_iter().fold(0, |cum, curr| cum ^ curr)
+    }
+
+    pub fn intersect2(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+        let mut seen_counts: HashMap<i32, i32> = HashMap::new();
+        let mut result: Vec<i32> = Vec::new();
+
+        for num1 in nums1 {
+            // seen_counts.insert(num1, seen_counts.get(&num1).unwrap_or_else(|| 1));
+            *seen_counts.entry(num1).or_insert(0) += 1;
+        }
+
+        for num2 in nums2 {
+            let counts = seen_counts.get(&num2).unwrap_or_else(|| &0);
+            if counts > &0 {
+                seen_counts.insert(num2, counts - 1);
+                result.push(num2);
+            }
+        }
+
+        result
+    }
+
+    pub fn intersect3(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+        let mut map = HashMap::new();
+
+        for &n in nums1.iter(){
+            *map.entry(n).or_insert(0) += 1;
+        }
+
+        let mut ans = Vec::new();
+
+        for n in nums2.iter(){
+            match map.get_mut(n){
+                Some(value) if *value > 0 =>  {
+                    ans.push(*n as i32);
+                    *value -= 1;
+                },
+                _ => {},
+
+            };
+        }
+
+        ans
+    }
+
+    pub fn intersect(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
+        let mut nums1 = nums1.clone();
+        nums1.sort();
+        let mut nums2 = nums2.clone();
+        nums2.sort();
+
+        let (mut i, mut j, mut k) = (0, 0, 0);
+
+        while let (Some(num1), Some(num2)) = (nums1.get(i), nums2.get(j)) {
+            // println!("Check: {}, {}", num1, num2);
+            if num1 == num2 {
+                // println!("Match: {}", num1);
+                nums1.insert(k, *num1);
+                i += 1;
+                j += 1;
+                k += 1;
+            } else if num1 > num2 {
+                j += 1;
+            } else {
+                i += 1;
+            }
+        }
+
+        nums1[0..k].to_vec()
     }
 }
